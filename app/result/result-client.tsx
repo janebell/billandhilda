@@ -118,18 +118,25 @@ export default function ResultClient() {
   }, [scoreParam]);
 
   useEffect(() => {
-  // Stop Safari/iOS from restoring scroll
-  const restore = (history as any).scrollRestoration;
-  if ("scrollRestoration" in history) (history as any).scrollRestoration = "manual";
+  // Some mobile browsers restore scroll on navigation; force top.
+  const hasSR = "scrollRestoration" in history;
+  const prev: History["scrollRestoration"] | undefined = hasSR
+    ? history.scrollRestoration
+    : undefined;
 
-  // Jump to top
+  if (hasSR) {
+    history.scrollRestoration = "manual";
+  }
+
   window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   requestAnimationFrame(() => window.scrollTo(0, 0));
   const t = setTimeout(() => window.scrollTo(0, 0), 60);
 
   return () => {
     clearTimeout(t);
-    if ("scrollRestoration" in history) (history as any).scrollRestoration = restore ?? "auto";
+    if (hasSR) {
+      history.scrollRestoration = prev ?? "auto";
+    }
   };
 }, []);
 
