@@ -34,6 +34,7 @@ export default function QuizPage() {
     questionRefs.current[i] = el;
   };
   const [currentIndex, setCurrentIndex] = useState(0);
+  
 
   useEffect(() => {
     const root = document.getElementById('quiz-scroll');
@@ -64,28 +65,31 @@ export default function QuizPage() {
     });
   };
 
-  const scrollToIndex = (i: number) => {
-    questionRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
+const scrollToIndex = (i: number) => {
+  setCurrentIndex(i); // instant UI feedback
+  questionRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 
-  const handleNext = (i: number) => {
-    const next = i + 1;
-    if (next < questions.length) {
-      scrollToIndex(next);
-    } else {
-      const avg = answers.reduce((a, b) => a + b, 0) / answers.length;
-      router.push(`/result?score=${avg}`);
-    }
-  };
+ const handleNext = (i: number) => {
+  const next = i + 1;
+  if (next < questions.length) {
+    scrollToIndex(next); // this now updates the dot immediately
+  } else {
+    const avg = answers.reduce((a, b) => a + b, 0) / answers.length;
+    router.push(`/result?score=${avg}`);
+  }
+};
 
-  const handlePrev = (i: number) => {
-    const prev = i - 1;
-    if (prev >= 0) scrollToIndex(prev);
-  };
+const handlePrev = (i: number) => {
+  const prev = i - 1;
+  if (prev >= 0) scrollToIndex(prev); // also updates the dot
+};
+
+  
 
   return (
     <main className="bg-white min-h-screen flex flex-col">
-      <h1 className="text-3xl font-extrabold text-center my-6">Let’s Find Out…</h1>
+      <h1 className="text-3xl font-extrabold text-center my-6">Find your mix…</h1>
 
       {/* Scrollable area; extra bottom padding so dots never cover content */}
       <div
@@ -147,12 +151,13 @@ export default function QuizPage() {
               <div className="text-gray-500">{`Q${index + 1} / ${questions.length}`}</div>
 
               <button
-                onClick={() => handleNext(index)}
-                className="px-6 py-3 rounded-full text-white font-semibold shadow"
-                style={{ backgroundColor: '#ec4899' }} // pink-500
-              >
-                {index === questions.length - 1 ? 'Next' /* shows "Next" per screenshot */ : 'Next'}
-              </button>
+  onClick={() => handleNext(index)}
+  className="px-6 py-3 rounded-full text-white font-semibold shadow"
+  style={{ backgroundColor: '#ec4899' }}
+  aria-label={index === questions.length - 1 ? 'Fetch results' : 'Next question'}
+>
+  {index === questions.length - 1 ? 'Fetch results' : 'Next'}
+</button>
             </div>
           </div>
         ))}

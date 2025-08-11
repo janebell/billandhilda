@@ -77,6 +77,28 @@ const RESULTS: Record<
   },
 };
 
+const IMAGE_BY_KEY: Record<
+  ResultKey,
+  { src: string; alt: string; dl: string }
+> = {
+  bill: {
+    src: "/result-dog-bill.png",
+    alt: "Bill result",
+    dl: "bill-result.png",
+  },
+  balanced: {
+    src: "/result-dog-balance.png",
+    alt: "Balanced result",
+    dl: "balanced-result.png",
+  },
+  hilda: {
+    src: "/result-dog-hilda.png",
+    alt: "Hilda result",
+    dl: "hilda-result.png",
+  },
+};
+
+
 export default function ResultClient() {
   const params = useSearchParams();
   const scoreParam = params.get("score");
@@ -167,11 +189,13 @@ export default function ResultClient() {
           {content ? content.title : "—"}
         </p>
 
-        <img
-          src="/result-dog.png"
-          alt="Result Illustration"
-          className="w-48 h-auto mx-auto mb-4"
-        />
+          {resultKey && (
+          <img
+            src={IMAGE_BY_KEY[resultKey].src}
+            alt={IMAGE_BY_KEY[resultKey].alt}
+            className="w-48 h-auto mx-auto mb-4"
+          />
+        )}
 
         {content && (
           <section style={{ textAlign: "left" }}>
