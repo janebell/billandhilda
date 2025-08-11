@@ -1,26 +1,14 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* temporary probe so we can SEE Tailwind is working */
+@layer utilities {
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.h2c-fallback, .h2c-fallback * {
+  color: #374151 !important;          /* ≈ text-gray-700 */
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.h2c-fallback h1 {
+  color: #111827 !important;          /* ≈ text-gray-900 */
 }
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.h2c-fallback {
+  background-color: #ffffff !important;/* ≈ bg-white */
 }

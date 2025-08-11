@@ -1,4 +1,4 @@
-'use client';
+// pages/index.tsx
 import Link from 'next/link';
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
       </h1>
 
       <img
-        src="/bill-hilda-start.png"
+        src="/bill-hilda-start.png" // Replace with your own illustration
         alt="Bill and Hilda"
         className="w-64 h-auto mb-6"
       />
