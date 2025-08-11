@@ -119,10 +119,10 @@ const handlePrev = (i: number) => {
             <div className="text-center">
               <p className="text-2xl font-semibold mb-6">{q.label}</p>
 
-              <div className="flex justify-between text-base text-gray-600 mb-3">
-                <span>{q.left}</span>
-                <span>{q.right}</span>
-              </div>
+             <div className="grid grid-cols-2 gap-6 sm:gap-10 text-[15px] sm:text-base text-gray-600 leading-snug mb-2">
+  <span className="text-left pr-4">{q.left}</span>
+  <span className="text-right pl-4">{q.right}</span>
+</div>
 
               <input
                 type="range"
@@ -130,7 +130,7 @@ const handlePrev = (i: number) => {
                 max={100}
                 value={answers[index]}
                 onChange={(e) => handleSliderChange(index, Number(e.target.value))}
-                className="w-full accent-yellow-500"
+               className="paw-slider w-full emoji mt-3"
                 aria-label={`Answer for question ${index + 1}`}
               />
             </div>
