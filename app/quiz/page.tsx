@@ -8,14 +8,22 @@ export default function QuizPage() {
 
   // ---- quiz data (8) ----
   const questions = [
-    { label: 'Your comms style today is…', left: 'Warm & exploratory ☕️', right: 'Crisp & action-led ✍️' },
-    { label: 'If a blocker pops up, you…', left: 'Pause & sense-check', right: 'Triage & move' },
-    { label: 'Question 3', left: 'Warmth', right: 'Competence' },
-    { label: 'Question 4', left: 'Warmth', right: 'Competence' },
-    { label: 'Question 5', left: 'Warmth', right: 'Competence' },
-    { label: 'Question 6', left: 'Warmth', right: 'Competence' },
-    { label: 'Question 7', left: 'Warmth', right: 'Competence' },
-    { label: 'Faced with a challenge, you…', left: 'Sniff it out 🐾', right: 'Charge ahead 🐕‍🦺' },
+    { label: "On a big walk, you're focused on...", left: 'Planning the route & pace', right: 'Making friends along the way' },
+
+    { label: "On the couch, you're aiming for...", left: 'Prime spot, you know the comfiest cushions', right:"Room for everyone" },
+
+    { label: 'Doorbell rings mid nap, you...', left: 'Move fast: clear path, handle it', right: 'Biiig stretch & calm your nerves first' },
+
+    { label: 'You spot something tasty on the kitchen bench, you...', left: 'Assess the risks, plan the reach, execute cleanly', right: 'Enlist allies with charm and make it a shared win' },
+
+    { label: 'At the dog park gate, you..', left: 'Scan the space, set the pace', right: 'Start sniffing, meeting & greeting' },
+
+    { label: 'Choosing a new chew toy, you..', left: 'Test the sturdy option that will last the game', right: 'Pick the one that sparks excitement with the group' },
+
+    { label: 'When two dogs get tense, you', left: 'Ears up, alert, ready to protect your pack', right: 'Wag tails, hear both sides' },
+
+    { label: 'Jumping in the car for a mystery trip, you..', left: 'Head out the window, catching a breeze & watching the road', right: 'Settle in, trust the driver, take a nap' },
+
   ];
 
   const [answers, setAnswers] = useState<number[]>(() => Array(questions.length).fill(50));

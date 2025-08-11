@@ -15,6 +15,8 @@ export default function Home() {
       />
 
       <p className="text-lg text-gray-600 max-w-md mb-10">
+        Bill and Hilda are high performing, expert leaders, who each bring a superpower to their leadership skills...even if their major project is conquering the couch for the evening. 
+        
         Take this playful self-check to find out what kind of leadership energy you're bringing into the day.
       </p>
 
