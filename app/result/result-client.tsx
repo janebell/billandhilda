@@ -2,6 +2,8 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+
 
 type ResultKey = "bill" | "balanced" | "hilda";
 
@@ -168,7 +170,7 @@ export default function ResultClient() {
 
   return (
     <main
-      className="min-h-screen flex flex-col items-center justify-center px-4 py-10 text-center"
+      className="min-h-screen flex flex-col items-center justify-start px-4 py-10 text-center"
       style={{ backgroundColor: "#f9fafb", color: "#111111" }}
     >
       <div
@@ -265,7 +267,7 @@ export default function ResultClient() {
           </section>
         )}
       </div>
-
+<div className="-mt-2 flex flex-col items-center gap-3 sm:gap-5">
       <button
         onClick={handleDownload}
         className="mt-6 text-white font-bold py-2 px-4 rounded-full"
@@ -273,6 +275,18 @@ export default function ResultClient() {
       >
         Download Your Result
       </button>
+        <Link
+  href="/home"
+  aria-label="Back to home"
+  className="mmt-3 inline-flex items-center justify-center
+               text-sm font-medium rounded-full border px-4 py-2
+               bg-pink-100 text-pink-700 border-pink-200
+               hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300"
+>
+  Back to home
+</Link>
+</div>
+
     </main>
   );
 }
