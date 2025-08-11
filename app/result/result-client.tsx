@@ -211,7 +211,7 @@ export default function ResultClient() {
                 color: "#111111",
               }}
             >
-              You're strong at
+              You&apos;re strong at
             </h2>
             <ul
               style={{ paddingLeft: 18, marginBottom: 10, color: "#374151" }}
