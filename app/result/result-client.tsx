@@ -117,6 +117,22 @@ export default function ResultClient() {
     }
   }, [scoreParam]);
 
+  useEffect(() => {
+  // Stop Safari/iOS from restoring scroll
+  const restore = (history as any).scrollRestoration;
+  if ("scrollRestoration" in history) (history as any).scrollRestoration = "manual";
+
+  // Jump to top
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  requestAnimationFrame(() => window.scrollTo(0, 0));
+  const t = setTimeout(() => window.scrollTo(0, 0), 60);
+
+  return () => {
+    clearTimeout(t);
+    if ("scrollRestoration" in history) (history as any).scrollRestoration = restore ?? "auto";
+  };
+}, []);
+
   const handleDownload = async () => {
     if (!resultRef.current) return;
 
@@ -170,7 +186,7 @@ export default function ResultClient() {
 
   return (
     <main
-      className="min-h-screen flex flex-col items-center justify-start px-4 py-10 text-center"
+      className="min-h-[100svh] flex flex-col items-center justify-start px-4 pt-3 sm:pt-6 pb-8 text-center"
       style={{ backgroundColor: "#f9fafb", color: "#111111" }}
     >
       <div
@@ -268,6 +284,7 @@ export default function ResultClient() {
         )}
       </div>
 <div className="-mt-2 flex flex-col items-center gap-3 sm:gap-5">
+  {process.env.NODE_ENV !== "production" && (
       <button
         onClick={handleDownload}
         className="mt-6 text-white font-bold py-2 px-4 rounded-full"
@@ -275,6 +292,7 @@ export default function ResultClient() {
       >
         Download Your Result
       </button>
+  )}
         <Link
   href="/home"
   aria-label="Back to home"
