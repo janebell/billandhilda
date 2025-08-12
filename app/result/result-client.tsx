@@ -1,8 +1,14 @@
 "use client";
-
+import { track } from "@vercel/analytics";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+
+
+const DEFAULT_THRESHOLDS = { billMax: 46, hildaMin: 54 }; 
+// Balanced is the range [billMax … hildaMin]
+
 
 
 type ResultKey = "bill" | "balanced" | "hilda";
@@ -38,7 +44,7 @@ const RESULTS: Record<
     ],
   },
   balanced: {
-    title: "Balanced: Agile & Aware 🐾",
+    title: "A balanced pack 🐾",
     description:
       "You're thinking as a pack: steady pace with smart people radar. You switch stride to fit the terrain.",
     strengths: [
@@ -106,16 +112,27 @@ export default function ResultClient() {
   const scoreParam = params.get("score");
   const [resultKey, setResultKey] = useState<ResultKey | null>(null);
   const resultRef = useRef<HTMLDivElement>(null);
+  const billMax = Number(params.get("billMax") ?? DEFAULT_THRESHOLDS.billMax);
+const hildaMin = Number(params.get("hildaMin") ?? DEFAULT_THRESHOLDS.hildaMin);
 
-  useEffect(() => {
-    if (!scoreParam) return;
-    const s = Number(scoreParam);
-    if (Number.isFinite(s)) {
-      if (s < 40) setResultKey("bill");
-      else if (s <= 60) setResultKey("balanced");
-      else setResultKey("hilda");
-    }
-  }, [scoreParam]);
+useEffect(() => {
+  if (!scoreParam) return;
+  const s = Number(scoreParam);
+  if (!Number.isFinite(s)) return;
+
+  if (s < billMax) setResultKey("bill");
+  else if (s <= hildaMin) setResultKey("balanced");
+  else setResultKey("hilda");
+}, [scoreParam, billMax, hildaMin]);
+
+useEffect(() => {
+  if (!resultKey || !scoreParam) return;
+ track('quiz_result', {
+    bucket: resultKey,                 // "bill" | "balanced" | "hilda"
+    score: Number(scoreParam),
+  });
+}, [resultKey, scoreParam]);
+
 
   useEffect(() => {
   // Some mobile browsers restore scroll on navigation; force top.
@@ -140,54 +157,6 @@ export default function ResultClient() {
   };
 }, []);
 
-  const handleDownload = async () => {
-    if (!resultRef.current) return;
-
-    const { default: html2canvas } = await import("html2canvas");
-
-    const canvasEl = await html2canvas(resultRef.current, {
-      backgroundColor: "#ffffff",
-      scale: window.devicePixelRatio || 2,
-      scrollX: 0,
-      scrollY: -window.scrollY,
-      useCORS: true,
-      onclone: (doc) => {
-        const node = doc.getElementById("result-card") as HTMLElement | null;
-        if (!node) return;
-
-        // Strip Tailwind classes in the clone to avoid OKLCH utilities
-        node.className = "";
-        node.querySelectorAll<HTMLElement>("*").forEach((el) => {
-          el.className = "";
-        });
-
-        // Force hex/sRGB styles
-        const applySafe = (el: HTMLElement) => {
-          const isHeading = /^H\d$/i.test(el.tagName);
-          el.style.backgroundColor = el === node ? "#ffffff" : "transparent";
-          el.style.border = el === node ? "1px solid #e5e7eb" : el.style.border;
-          el.style.borderColor = "#e5e7eb";
-          el.style.boxShadow = "none";
-          el.style.color = isHeading ? "#111111" : "#374151";
-          el.style.fontFamily =
-            'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial';
-        };
-
-        applySafe(node);
-        node.querySelectorAll<HTMLElement>("*").forEach(applySafe);
-      },
-    });
-
-    canvasEl.toBlob((blob: Blob | null) => {
-      if (!blob) return;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "your-result.png";
-      a.click();
-      URL.revokeObjectURL(url);
-    }, "image/png");
-  };
 
   const content = resultKey ? RESULTS[resultKey] : null;
 
@@ -214,13 +183,7 @@ export default function ResultClient() {
           {content ? content.title : "—"}
         </p>
 
-          {resultKey && (
-          <img
-            src={IMAGE_BY_KEY[resultKey].src}
-            alt={IMAGE_BY_KEY[resultKey].alt}
-            className="w-48 h-auto mx-auto mb-4"
-          />
-        )}
+          {resultKey && (<Image src={IMAGE_BY_KEY[resultKey].src} alt={IMAGE_BY_KEY[resultKey].alt} width={192} height={192} className="w-48 h-auto mx-auto mb-4" />)}
 
         {content && (
           <section style={{ textAlign: "left" }}>
@@ -290,22 +253,39 @@ export default function ResultClient() {
           </section>
         )}
       </div>
-<div className="-mt-2 flex flex-col items-center gap-3 sm:gap-5">
-  {process.env.NODE_ENV !== "production" && (
-      <button
-        onClick={handleDownload}
-        className="mt-6 text-white font-bold py-2 px-4 rounded-full"
-        style={{ backgroundColor: "#f59e0b" }}
-      >
-        Download Your Result
-      </button>
-  )}
+<div className="mt-2 flex flex-col items-center gap-1 sm:gap-2">
+
+      {/* Cheeky buttons */}
+<div className="mt-3 flex items-center justify-center gap-3 flex-wrap">
+  {/* LinkedIn */}
+  <a
+    href="https://www.linkedin.com/in/janembell/"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-flex items-center justify-center
+               text-sm font-semibold py-2 px-4 rounded-full
+               bg-[#0A66C2] text-white hover:bg-[#084e96] shadow-sm"
+  >
+    Add Jane on LinkedIn
+  </a>
+
+  {/* Book a coffee */}
+  <a
+    href="mailto:?subject=Let%27s%20grab%20a%20coffee%20%26%20connect&body=Hi%20Jane,%20I%20was%20really%20impressed%20with%20your%20leadership%20perspective%20presentation.%20I%27d%20love%20to%20connect%20for%20a%20coffee%20to%20learn%20more%20about%20your%20career,%20aspirations%20and%20share%20my%20learnings%20with%20you."
+    className="inline-flex items-center justify-center
+               text-sm font-semibold py-2 px-4 rounded-full
+               bg-pink-200 text-pink-700 border border-pink-700
+               hover:bg-pink-500 hover:text-white shadow-sm"
+  >
+    Book a coffee with Jane
+  </a>
+  </div>
         <Link
   href="/home"
-  aria-label="Back to home"
+  aria-label="Start again"
   className="mmt-3 inline-flex items-center justify-center
                text-sm font-medium rounded-full border px-4 py-2
-               bg-pink-100 text-pink-700 border-pink-200
+               bg-yellow-200 text-pink-700 border-pink-700
                hover:bg-pink-200 focus:outline-none focus:ring-2 focus:ring-pink-300"
 >
   Back to home

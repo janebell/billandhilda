@@ -1,6 +1,8 @@
 @import "tailwindcss";
+:root { color-scheme: light; }   /* tell the browser sorry too bad, no darkmode 4 u */
+html, body { background:#fff; color:#111; }
 
-/* temporary probe so we can SEE Tailwind is working */
+/* temporary check Tailwind working because of annoying gremlins grrr */
 @layer utilities {
 }
 .h2c-fallback, .h2c-fallback * {
@@ -66,17 +68,10 @@ input[type="range"].paw-slider::-moz-range-thumb {
   background-size: 60% 60%;
 }
 
-/* OPTIONAL: Paw emoji on the thumb (works in modern Safari/Chrome).
-   If anything looks odd on a device, switch to the /paw.svg option below. */
+/* Paw emoji on the thumb (works in modern Safari/Chrome).
+   If anything looks odd on a device (weird android emoji library), switch to the /paw.svg option below. */
 input[type="range"].paw-slider.emoji::-webkit-slider-thumb,
 input[type="range"].paw-slider.emoji::-moz-range-thumb {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text x='50%25' y='55%25' dominant-baseline='middle' text-anchor='middle' font-size='34'>🐾</text></svg>");
 }
 
-/* ALTERNATIVE (super reliable): add /public/paw.svg and use this instead */
-/*
-input[type="range"].paw-slider.emoji::-webkit-slider-thumb,
-input[type="range"].paw-slider.emoji::-moz-range-thumb {
-  background-image: url('/paw.svg');
-}
-*/

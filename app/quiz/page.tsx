@@ -2,29 +2,80 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
+
+type Question = {
+  label: string;
+  left: string;
+  right: string;
+  img: string;
+  alt: string;
+};
 
 export default function QuizPage() {
   const router = useRouter();
 
-  // ---- quiz data (8) ----
-  const questions = [
-    { label: "On a big walk, you're focused on...", left: 'Planning the route & pace', right: 'Making friends along the way' },
-
-    { label: "On the couch, you're aiming for...", left: 'Prime spot, you know the comfiest cushions', right:"Room for everyone" },
-
-    { label: 'Doorbell rings mid nap, you...', left: 'Move fast: clear path, handle it', right: 'Biiig stretch & calm your nerves first' },
-
-    { label: 'You spot something tasty on the kitchen bench, you...', left: 'Assess the risks, plan the reach, execute cleanly', right: 'Enlist allies with charm and make it a shared win' },
-
-    { label: 'At the dog park gate, you..', left: 'Scan the space, set the pace', right: 'Start sniffing, meeting & greeting' },
-
-    { label: 'Choosing a new chew toy, you..', left: 'Test the sturdy option that will last the game', right: 'Pick the one that sparks excitement with the group' },
-
-    { label: 'When two dogs get tense, you', left: 'Ears up, alert, ready to protect your pack', right: 'Wag tails, hear both sides' },
-
-    { label: 'Jumping in the car for a mystery trip, you..', left: 'Head out the window, catching a breeze & watching the road', right: 'Settle in, trust the driver, take a nap' },
-
+  // ---- quiz data (8 qs) ----
+ const questions: Question[] = [
+    {
+      label: "On a big walk, you're focused on...",
+      left: 'Planning the route & pace',
+      right: 'Making friends along the way',
+      img: '/dog-map.PNG',
+      alt: 'Dog on a walk',
+    },
+     {
+      label: 'Jumping in the car for a mystery trip, you..',
+      left: 'Head out the window, catching a breeze & watching the road',
+      right: 'Settle in, trust the driver, take a nap',
+      img: '/dog-car.PNG',
+      alt: 'Dog in a car',
+    },
+    {
+      label: 'The doorbell rings mid nap, you...',
+      left: 'Move fast: clear path, handle it',
+      right: 'Biiig stretch & calm your nerves first',
+      img: '/dog-doorbell.PNG',
+      alt: 'Dog reacting to doorbell',
+    },
+    {
+      label: 'You spot something tasty on the kitchen bench, you...',
+      left: 'Assess the risks, plan the reach, execute cleanly',
+      right: 'Enlist allies with charm and make it a shared win',
+      img: '/dog-bench.PNG',
+      alt: 'Dog eyeing food on bench',
+    },
+    {
+      label: 'Arriving at the dog park, you..',
+      left: 'Scan the space, set the pace',
+      right: 'Start sniffing, meeting & greeting',
+      img: '/dog-search.PNG',
+      alt: 'Dog at park gate',
+    },
+    {
+      label: 'Choosing a new chew toy, you..',
+      left: 'Test the sturdy option that will last the game',
+      right: 'Pick the one that sparks excitement with the group',
+      img: '/dog-treat.PNG',
+      alt: 'Dog with chew toy',
+    },
+    {
+      label: 'When two dogs get tense, you',
+      left: 'Ears up, alert, ready to protect your pack',
+      right: 'Wag tails, hear both sides',
+      img: '/dog-mad.PNG',
+      alt: 'Two dogs in a tense moment',
+    },
+        {
+      label: "On the couch, you're aiming for...",
+      left: 'Prime spot, you know the comfiest cushions',
+      right: 'Room for everyone',
+      img: '/dog-couch.PNG',
+      alt: 'Dog on a couch',
+    },
+   
   ];
+
 
   const [answers, setAnswers] = useState<number[]>(() => Array(questions.length).fill(50));
 
@@ -66,14 +117,14 @@ export default function QuizPage() {
   };
 
 const scrollToIndex = (i: number) => {
-  setCurrentIndex(i); // instant UI feedback
+  setCurrentIndex(i); // responsive UI feedback
   questionRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
  const handleNext = (i: number) => {
   const next = i + 1;
   if (next < questions.length) {
-    scrollToIndex(next); // this now updates the dot immediately
+    scrollToIndex(next); // tupdate dot live
   } else {
     const avg = answers.reduce((a, b) => a + b, 0) / answers.length;
     router.push(`/result?score=${avg}`);
@@ -110,11 +161,14 @@ const handlePrev = (i: number) => {
             "
             style={{ borderColor: '#00000022' }}
           >
-            <img
-              src="/bill-hilda-start.png"
-              alt="Bill & Hilda"
-              className="w-40 h-40 object-cover rounded-lg mx-auto"
-            />
+            {/*lazy replace holding image with new ones */}
+<img
+  src={q.img || "/bill-hilda-start.png"}
+  alt={q.alt || "Bill & Hilda"}
+  className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 object-cover rounded-lg mx-auto"
+  loading="lazy"
+  decoding="async"
+/>
 
             <div className="text-center">
               <p className="text-2xl font-semibold mb-6">{q.label}</p>
@@ -151,6 +205,7 @@ const handlePrev = (i: number) => {
               <div className="text-gray-500">{`Q${index + 1} / ${questions.length}`}</div>
 
               <button
+
   onClick={() => handleNext(index)}
   className="px-6 py-3 rounded-full text-white font-semibold shadow"
   style={{ backgroundColor: '#ec4899' }}
