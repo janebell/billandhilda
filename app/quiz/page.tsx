@@ -127,7 +127,7 @@ const scrollToIndex = (i: number) => {
     scrollToIndex(next); // tupdate dot live
   } else {
     const avg = answers.reduce((a, b) => a + b, 0) / answers.length;
-    router.push(`/result?score=${avg}`);
+    router.push(`/result?score=${avg}`), { scroll: true };;
   }
 };
 

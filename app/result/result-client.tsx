@@ -31,7 +31,6 @@ const RESULTS: Record<
       "Clear direction and confident decisions",
       "Risk scanning and contingency thinking",
       "Operational pace and guardrails",
-      "On-time delivery",
     ],
     watchouts: [
       'Skipping the "why" or human context',
@@ -54,7 +53,6 @@ const RESULTS: Record<
     ],
     watchouts: [
       "Hedging too long before committing",
-      "Pace drag from over-checking",
       "Mixed signals if priorities shift mid-run",
     ],
     connect: [
@@ -67,7 +65,7 @@ const RESULTS: Record<
     description:
       "You're channeling Hilda, the connection-first greyhound. You sniff possibilities, read the room, and bring the pack with you.",
     strengths: [
-      "Stakeholder trust and buy-in",
+      "Building trust and buy-in",
       "De-escalating tension",
       "Team morale and safety",
       "Discovery and facilitation",
@@ -75,7 +73,6 @@ const RESULTS: Record<
     watchouts: [
       "Softening or delaying hard calls",
       'Scope creep from "just one more idea"',
-      "Fuzzy boundaries",
       "Slower decision cadence when vibes are high",
     ],
     connect: [
@@ -134,35 +131,11 @@ useEffect(() => {
 }, [resultKey, scoreParam]);
 
 
-  useEffect(() => {
-  // Some mobile browsers restore scroll on navigation; force top.
-  const hasSR = "scrollRestoration" in history;
-  const prev: History["scrollRestoration"] | undefined = hasSR
-    ? history.scrollRestoration
-    : undefined;
-
-  if (hasSR) {
-    history.scrollRestoration = "manual";
-  }
-
-  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  requestAnimationFrame(() => window.scrollTo(0, 0));
-  const t = setTimeout(() => window.scrollTo(0, 0), 60);
-
-  return () => {
-    clearTimeout(t);
-    if (hasSR) {
-      history.scrollRestoration = prev ?? "auto";
-    }
-  };
-}, []);
-
-
   const content = resultKey ? RESULTS[resultKey] : null;
 
   return (
     <main
-      className="min-h-[100svh] flex flex-col items-center justify-start px-4 pt-3 sm:pt-6 pb-8 text-center"
+      className="min-h-[100svh] flex flex-col items-center justify-start px-4 pt-3 sm:pt-6 pb-8 text-center overscroll-y-contain"
       style={{ backgroundColor: "#f9fafb", color: "#111111" }}
     >
       <div
