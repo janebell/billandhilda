@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 
-const DEFAULT_THRESHOLDS = { billMax: 46, hildaMin: 54 }; 
+const DEFAULT_THRESHOLDS = { billMax: 47, hildaMin: 53 }; 
 // Balanced is the range [billMax … hildaMin]
 
 

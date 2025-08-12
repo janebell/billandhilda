@@ -24,7 +24,7 @@ export default function Home() {
 <Image src="/bill-hilda-start.png" alt="Bill and Hilda" width={256} height={256} className="w-64 h-auto mb-6" priority />
 
       <p className="text-lg text-center mt-1 mb-3 text-gray-600 max-w-md">
-        Bill and Hilda are high performing leaders, who each bring unique superpowers to their team — even if their big project is conquering the couch. Take this quick self-check to find out your leadership strengths.
+        Bill and Hilda are high performing leaders, who each bring unique superpowers to their team ...even if their big project is conquering the couch. Take this quick self-check to find out your leadership strengths.
       </p>
 
       {/* Primary CTA */}
