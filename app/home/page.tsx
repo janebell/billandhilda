@@ -55,13 +55,12 @@ export default function Home() {
 
           {/* Book a coffee via email */}
           <a
-          href={mailtoLink}
-           onClick={() => track('cta_email_connect')}
+          href="mailto:jane.bell@afl.com.au"
             className={`${secondaryBase} py-2.5 px-4 bg-pink-100 text-pink-700 border border-pink-200 hover:bg-pink-200 focus:ring-pink-300`}
             aria-label="Book a coffee with Jane"
             title="Book a coffee with Jane"
           >
-            Book a coffee with Jane
+            Email jane.bell@afl.com.au
           </a>
         </div>
          <div className="mt-2 flex justify-center">

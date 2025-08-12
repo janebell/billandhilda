@@ -243,15 +243,14 @@ useEffect(() => {
   </a>
 
   {/* Book a coffee */}
-  <a
-    href="mailto:?subject=Let%27s%20grab%20a%20coffee%20%26%20connect&body=Hi%20Jane,%20I%20was%20really%20impressed%20with%20your%20leadership%20perspective%20presentation.%20I%27d%20love%20to%20connect%20for%20a%20coffee%20to%20learn%20more%20about%20your%20career,%20aspirations%20and%20share%20my%20learnings%20with%20you."
-    className="inline-flex items-center justify-center
-               text-sm font-semibold py-2 px-4 rounded-full
-               bg-pink-200 text-pink-700 border border-pink-700
-               hover:bg-pink-500 hover:text-white shadow-sm"
-  >
-    Book a coffee with Jane
-  </a>
+    <a
+          href="mailto:jane.bell@afl.com.au"
+            className={`${secondaryBase} py-2.5 px-4 bg-pink-100 text-pink-700 border border-pink-200 hover:bg-pink-200 focus:ring-pink-300`}
+            aria-label="Book a coffee with Jane"
+            title="Book a coffee with Jane"
+          >
+            Email jane.bell@afl.com.au
+          </a>
   </div>
         <Link
   href="/home"
