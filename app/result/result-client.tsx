@@ -243,14 +243,15 @@ useEffect(() => {
   </a>
 
   {/* Book a coffee */}
-    <a
-          href="mailto:jane.bell@afl.com.au"
-            className={`${secondaryBase} py-2.5 px-4 bg-pink-100 text-pink-700 border border-pink-200 hover:bg-pink-200 focus:ring-pink-300`}
-            aria-label="Book a coffee with Jane"
-            title="Book a coffee with Jane"
-          >
-            Email jane.bell@afl.com.au
-          </a>
+   <a
+  href="mailto:jane.bell@afl.com.au"
+  className="inline-flex items-center justify-center text-sm font-semibold rounded-full border py-2.5 px-4 bg-pink-100 text-pink-700 border-pink-200 hover:bg-pink-200 shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-300"
+  aria-label="Book a coffee with Jane"
+  title="Book a coffee with Jane"
+>
+  Email jane.bell@afl.com.au
+</a>
+
   </div>
         <Link
   href="/home"
