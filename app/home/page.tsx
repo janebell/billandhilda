@@ -16,8 +16,8 @@ export default function Home() {
     'inline-flex items-center justify-center text-sm font-semibold rounded-full shadow-sm transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2';
 
   return (
-    <main className="min-h-[100svh] flex flex-col items-center justify-center px-4 pt-4 pb-6 sm:pt-10 sm:pb-12">
-      <h1 className="text-3xl sm:text-4xl font-extrabold text-center -mt-[50px] mb-4 text-gray-800">
+    <main className="min-h-[100svh] flex flex-col items-center justify-center px-4 pb-6 sm:pt-10 sm:pb-12 pt-[calc(env(safe-area-inset-top)+8px)]">
+     <h1 className="text-3xl sm:text-4xl font-extrabold text-center mt-0 mb-4 text-gray-800">
         Are You Bill or Hilda Today?
       </h1>
 
