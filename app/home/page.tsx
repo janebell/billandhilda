@@ -9,12 +9,6 @@ export default function Home() {
   const coffeeBody =
     "Hi Jane, I was really impressed with your leadership perspective presentation. I'd love to connect for a coffee to learn more about your career, aspirations and share my professional insights & learnings with you. Please find a time that suits us both in my calendar, and book in.";
 
-  const outlookCalLink =
-    `https://outlook.office.com/calendar/0/deeplink/compose` +
-    `?path=/calendar/action/compose&rru=addevent` +
-    `&to=${enc('jane.bell@afl.com.au')}` +
-    `&subject=${enc(coffeeSubject)}` +
-    `&body=${enc(coffeeBody)}`;
 
   const mailtoLink = `mailto:jane.bell@afl.com.au?subject=${enc(coffeeSubject)}&body=${enc(coffeeBody)}`;
 
@@ -59,36 +53,18 @@ export default function Home() {
             Add Jane on LinkedIn
           </a>
 
-          {/* Book a coffee (Outlook calendar) */}
+          {/* Book a coffee via email */}
           <a
-            href={outlookCalLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => track('cta_coffee_calendar')}
+          href={mailtoLink}
+           onClick={() => track('cta_email_connect')}
             className={`${secondaryBase} py-2.5 px-4 bg-pink-100 text-pink-700 border border-pink-200 hover:bg-pink-200 focus:ring-pink-300`}
             aria-label="Book a coffee with Jane"
             title="Book a coffee with Jane"
           >
             Book a coffee with Jane
           </a>
-
-          {/* Email connect */}
-          
         </div>
          <div className="mt-2 flex justify-center">
-    <a
-      href={mailtoLink}
-      onClick={() => track('cta_email_connect')}
-      className="inline-flex items-center justify-center
-                 text-s font-medium rounded-full border
-                 px-3 py-1.5 text-pink-700 border-pink-200
-                 hover:bg-pink-50 transition-colors
-                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-200"
-      aria-label="Connect via email"
-      title="Connect via email"
-    >
-      Connect via email
-    </a>
   </div>
       </div>
     </main>
